@@ -1,0 +1,97 @@
+1. List all employees whose name begins with 'A'. 
+
+select ename 
+from emp
+where ename LIKE 'A%'
+order by ename;
+
+2. Select all those employees who don't have a manager. 
+
+SELECT ename,empno
+FROM emp
+WHERE mgr-id IS NULL;
+
+3. List employee name, number and salary for those employees who earn in the range 1200 to 1400.
+
+SELECT ename,empno,sal
+FROM emp
+WHERE sal BETWEEN 1200 and 1400;
+
+4. Give all the employees in the RESEARCH department a 10% pay rise. Verify that this has been done by listing all their details before and after the rise. 
+
+Select * from emp
+UPDATE sal
+SET sal = (sal * 0.10)
+WHERE deptno=20;
+GROUP BY empno;
+
+5. Find the number of CLERKS employed. Give it a descriptive heading.
+
+SELECT COUNT(Ename) as 'Num of clerks' from Emp where Job='Clerk'
+
+6. Find the average salary for each job type and the number of people employed in each job. 
+
+SELECT count(*),
+	 avg(sal),
+       deptno,
+       job_name
+FROM emp
+GROUP BY empno,job_name;
+
+7. List the employees with the lowest and highest salary.
+
+SELECT MAX(salary), MIN(salary) 
+FROM emp 
+GROUP BY empno,ename
+
+8. List full details of departments that don't have any employees. 
+
+SELECT * FROM dept
+WHERE deptno
+NOT IN (select deptno FROM emp);
+
+9. Get the names and salaries of all the analysts earning more than 1200 who are based in department 20. Sort the answer by ascending order of name. 
+
+SELECT ename,sal
+WHERE sal > 1200
+ALL(SELECT ename, empno,sal 
+    FROM employees 
+    HAVING job=analyst and deptno=20
+    GROUP BY department_id
+    ORDER BY ename asc);
+
+10. For each department, list its name and number together with the total salary paid to employees in that department. 
+
+SELECT deptno, SUM(sal)
+FROM emp
+GROUP BY deptno;
+
+11. Find out salary of both MILLER and SMITH.
+
+SELECT Ename,Sal from Emp where Ename='Miller' or Ename='Smith'
+
+12. Find out the names of the employees whose name begin with ‘A’ or ‘M’. 
+
+select employee_name 
+from employees
+where employee_name LIKE 'AM%'
+order by employee_name
+
+13. Compute yearly salary of SMITH.
+
+select empno,ename,sum(12*sal)
+FROM emp
+WHERE ename='Smith';
+
+14. List the name and salary for all employees whose salary is not in the range of 1500 and 2850. 
+
+SELECT ename,empno
+FROM emp
+WHERE sal NOT BETWEEN 1200 and 1400;
+
+15. Display list of managers who have more than 2 employees reporting to them
+
+SELECT Mgr-id,
+COUNT(empno) EMP_COUNT
+FROM emp
+GROUP BY Mgr-id HAVING (COUNT(empno)>2;
